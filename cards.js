@@ -4,20 +4,38 @@
 // recentSeries = [];
 
 
-let series = loadAnimes();
-let series2=series.then(result => result.data);
-let anim = series[0];
-let anim2 = series[1];
 
-recentSeries.push(anim);
 
-recentSeries.push(anim2);
+let series = loadAnimes().then(result => {
+    series = result
 
-// document.querySelector("#card1 .card-title").innerText=anim.getTitle();
-// document.getElementById("card1").classList.add("bg-custom"); //url('${recentSeries[0].getPoster()}')
-// document.getElementById("card1").style.backgroundImage = `url('${recentSeries[0].getPoster()}'), linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5))`;
-// document.getElementById("card1").style.backgroundSize = "cover"; // Ajustar tamaño
-// document.getElementById("card1").style.backgroundPosition = "center"; // Centrar imagen
+    let recentSeries = [];
+    let anim = series[0];
+    let anim2 = series[1];
+
+    recentSeries.push(anim);
+
+    recentSeries.push(anim2);
+
+
+    document.querySelector("#card1 .card-title").innerText = anim.getTitle();
+    document.getElementById("card1").classList.add("bg-custom"); //url('${recentSeries[0].getPoster()}')
+
+    //console.log(recentSeries{})
+    document.getElementById("card1").style.backgroundImage = `url('${series[0].getPoster()}'), linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5))`;
+    // document.getElementById("card1").style.backgroundImage = `url('${recentSeries[0].getPoster()}'), linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5))`;
+    document.getElementById("card1").style.backgroundSize = "cover"; // Ajustar tamaño
+    document.getElementById("card1").style.backgroundPosition = "center"; // Centrar imagen
+
+});
+
+
+
+
+
+// series.forEach((ani, index) => {
+// });
+
 
 // document.querySelector("#card2 .card-title").innerText=recentSeries[1].getTitle();
 // document.getElementById("card2").classList.add("bg-custom"); //url('${recentSeries[0].getPoster()}')

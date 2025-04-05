@@ -6,7 +6,7 @@ class Serie {
     releaseSeason = "";
     malScore = 0;
     sinopsis = "";
-    studio = ""
+    studio = [];
     doblaje = false;
     platforms = "";
     trailerLink = "";
@@ -55,9 +55,14 @@ const loadAnimes = async () => {
             ani.title_english,
             ani.episodes,
             0, //num seasons
-            ani.season, 
+            `${ani.season} ${ani.yer}`, 
             ani.score,
             ani.sinopsis,
+            ani.studios,
+            false,
+            "",
+            ani.trailer.embed_url,
+            ani.images.jpg.image_url
         );
 
         series.push(temp_ani);
@@ -71,8 +76,8 @@ const loadAnimes = async () => {
 
 
 
-anim = new Serie(0, "The emminence in shadow", 32,  2, "Fall", 8.5, "Es un Isekai xd", "Nexus", true, "Netflix", "none", "https://images.justwatch.com/poster/301091057/s718/the-eminence-in-shadow.jpg", "https://www.netflix.com/watch/81642098?source=35");
-anim.posterLink = "https://images.justwatch.com/poster/301091057/s718/the-eminence-in-shadow.jpg";
-anim2 = new Serie(1, "The apothecary Daires", 36, 2, "Fall", 9.1, "Los diarios chidos de la boticaria", "Chido", true, "Crunchyroll", "https://www.youtube.com/watch?v=XYNGkSvFT8c&t=19s", "https://m.media-amazon.com/images/M/MV5BNjAxMmFjZjgtYjM1ZS00NzdmLTliZDktZmIyMzU5YTBlNDBmXkEyXkFqcGc@._V1_.jpg","https://www.crunchyroll.com/es/series/G3KHEVDJ7/the-apothecary-diaries")
-recentSeries = [];
+// anim = new Serie(0, "The emminence in shadow", 32,  2, "Fall", 8.5, "Es un Isekai xd", "Nexus", true, "Netflix", "none", "https://images.justwatch.com/poster/301091057/s718/the-eminence-in-shadow.jpg", "https://www.netflix.com/watch/81642098?source=35");
+// anim.posterLink = "https://images.justwatch.com/poster/301091057/s718/the-eminence-in-shadow.jpg";
+// anim2 = new Serie(1, "The apothecary Daires", 36, 2, "Fall", 9.1, "Los diarios chidos de la boticaria", "Chido", true, "Crunchyroll", "https://www.youtube.com/watch?v=XYNGkSvFT8c&t=19s", "https://m.media-amazon.com/images/M/MV5BNjAxMmFjZjgtYjM1ZS00NzdmLTliZDktZmIyMzU5YTBlNDBmXkEyXkFqcGc@._V1_.jpg","https://www.crunchyroll.com/es/series/G3KHEVDJ7/the-apothecary-diaries")
+// recentSeries = [];
 
