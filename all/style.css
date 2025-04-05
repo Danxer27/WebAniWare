@@ -1,0 +1,23 @@
+#inicio {
+    background-color: #4913a0;
+}
+
+#cardsMenu {
+    margin: 60px;
+}
+
+#mainNav {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 80px;
+    border: 50px;
+}
+
+#searchButton {
+    margin-right: 8px;
+} 
+
+#pages {
+    align-content: center;
+    margin: 100px;
+}

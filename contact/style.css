@@ -1,0 +1,28 @@
+#inicio {
+    background-color: #4913a0;
+}
+
+#cardsMenu {
+    margin: 60px;
+}
+
+#mainNav {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 80px;
+    border: 50px;
+}
+
+#searchButton {
+    margin-right: 8px;
+} 
+
+#formu {
+    padding: 12em;
+}
+
+.form-label {
+    color: aliceblue;
+    text-shadow: #4913a0;
+    font-size: 28px;
+}
