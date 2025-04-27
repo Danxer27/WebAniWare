@@ -41,38 +41,38 @@ class Serie {
 }
 
 
-const loadAnimes = async () => {
-    let series = [];
-    try {
-      const res = await fetch("https://api.jikan.moe/v4/anime");
-      const data = await res.json();
-      const anims = data.data;
-      dataAux = anims;
+// const loadAnimes = async () => {
+//     let series = [];
+//     try {
+//       const res = await fetch("https://api.jikan.moe/v4/anime");
+//       const data = await res.json();
+//       const anims = data.data;
+//       dataAux = anims;
 
-      anims.forEach((ani, index) => {
-        const temp_ani = new Serie(
-            ani.mal_id,
-            ani.title_english,
-            ani.episodes,
-            0, //num seasons
-            `${ani.season} ${ani.yer}`, 
-            ani.score,
-            ani.sinopsis,
-            ani.studios,
-            false,
-            "",
-            ani.trailer.embed_url,
-            ani.images.jpg.image_url
-        );
+//       anims.forEach((ani, index) => {
+//         const temp_ani = new Serie(
+//             ani.mal_id,
+//             ani.title_english,
+//             ani.episodes,
+//             0, //num seasons
+//             `${ani.season} ${ani.yer}`, 
+//             ani.score,
+//             ani.sinopsis,
+//             ani.studios,
+//             false,
+//             "",
+//             ani.trailer.embed_url,
+//             ani.images.jpg.image_url
+//         );
 
-        series.push(temp_ani);
-      });
+//         series.push(temp_ani);
+//       });
 
-    } catch (e) {
-      console.log("ERROR!!!", e);
-    }
-    return series;
-  }; 
+//     } catch (e) {
+//       console.log("ERROR!!!", e);
+//     }
+//     return series;
+//   }; 
 
 
 

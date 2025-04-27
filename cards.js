@@ -5,33 +5,61 @@
 
 
 
+// let series = loadAnimes().then(result => {
+//     series = result
+
+//     let recentSeries = [];
+//     let anim = series[0];
+//     let anim2 = series[1];
+
+//     recentSeries.push(anim);
+
+//     recentSeries.push(anim2);
+
+
+//     document.querySelector("#card1 .card-title").innerText = anim.getTitle();
+//     document.getElementById("card1").classList.add("bg-custom"); //url('${recentSeries[0].getPoster()}')
+
+//     //console.log(recentSeries{})
+//     document.getElementById("card1").style.backgroundImage = `url('${series[0].getPoster()}'), linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5))`;
+//     // document.getElementById("card1").style.backgroundImage = `url('${recentSeries[0].getPoster()}'), linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5))`;
+//     document.getElementById("card1").style.backgroundSize = "cover"; // Ajustar tamaño
+//     document.getElementById("card1").style.backgroundPosition = "center"; // Centrar imagen
+
+// });
+
+
+const loadAnimes = async () => {
+    let series = [];
+    try {
+      const res = await fetch("https://api.jikan.moe/v4/anime");
+      const data = await res.json();
+      series = data.data;
+    } catch (e) {
+      console.log("ERROR!!!", e);
+    }
+    return series;
+}; 
 
 let series = loadAnimes().then(result => {
     series = result
 
-    let recentSeries = [];
-    let anim = series[0];
-    let anim2 = series[1];
+    const cardsMenu = document.getElementById('cardsMenu');
+    const cards = cardsMenu.querySelectorAll('.card');
 
-    recentSeries.push(anim);
-
-    recentSeries.push(anim2);
-
-
-    document.querySelector("#card1 .card-title").innerText = anim.getTitle();
-    document.getElementById("card1").classList.add("bg-custom"); //url('${recentSeries[0].getPoster()}')
-
-    //console.log(recentSeries{})
-    document.getElementById("card1").style.backgroundImage = `url('${series[0].getPoster()}'), linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5))`;
-    // document.getElementById("card1").style.backgroundImage = `url('${recentSeries[0].getPoster()}'), linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5))`;
-    document.getElementById("card1").style.backgroundSize = "cover"; // Ajustar tamaño
-    document.getElementById("card1").style.backgroundPosition = "center"; // Centrar imagen
+    for (let i = 0; i < 20; i++) {
+      card = cards[i];
+      card.innerText = series[i].title_english;
+      card.classList.add("bg-custom"); //url('${recentSeries[0].getPoster()}')
+      card.style.backgroundImage = `url('${series[i].images.webp.image_url}'), linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5))`;
+      card.style.backgroundSize = "cover"; // Ajustar tamaño
+      card.style.backgroundPosition = "center"; // Centrar imagen
+    }
 
 });
 
 
-
-
+//Meter los datos cargados de la api en las cards del menu
 
 // series.forEach((ani, index) => {
 // });
