@@ -7,3 +7,6 @@ para buscar por su categoria o genero, y podiendo hacer tus propias listas con t
 favoritos
 
 Uso de JIKAN API y BootsTrap
+
+# index.hmtl
+Para hacer prueba de la pagina es haciendole live desde 'index.html'
