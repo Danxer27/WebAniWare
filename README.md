@@ -8,5 +8,9 @@ favoritos
 
 Uso de JIKAN API y BootsTrap
 
-# index.hmtl
+### index.hmtl
 Para hacer prueba de la pagina es haciendole live desde 'index.html'
+
+### Link
+tambien se puede checar en:
+https://web-ani-ware.vercel.app/
