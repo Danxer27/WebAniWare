@@ -1,38 +1,8 @@
-// anim = new Serie(0, "The emminence in shadow", 32,  2, "Fall", 8.5, "Es un Isekai xd", "Nexus", true, "Netflix", "none", "https://images.justwatch.com/poster/301091057/s718/the-eminence-in-shadow.jpg", "https://www.netflix.com/watch/81642098?source=35");
-// anim.posterLink = "https://images.justwatch.com/poster/301091057/s718/the-eminence-in-shadow.jpg";
-// anim2 = new Serie(1, "The apothecary Daires", 36, 2, "Fall", 9.1, "Los diarios chidos de la boticaria", "Chido", true, "Crunchyroll", "https://www.youtube.com/watch?v=XYNGkSvFT8c&t=19s", "https://m.media-amazon.com/images/M/MV5BNjAxMmFjZjgtYjM1ZS00NzdmLTliZDktZmIyMzU5YTBlNDBmXkEyXkFqcGc@._V1_.jpg","https://www.crunchyroll.com/es/series/G3KHEVDJ7/the-apothecary-diaries")
-// recentSeries = [];
-
-
-
-// let series = loadAnimes().then(result => {
-//     series = result
-
-//     let recentSeries = [];
-//     let anim = series[0];
-//     let anim2 = series[1];
-
-//     recentSeries.push(anim);
-
-//     recentSeries.push(anim2);
-
-
-//     document.querySelector("#card1 .card-title").innerText = anim.getTitle();
-//     document.getElementById("card1").classList.add("bg-custom"); //url('${recentSeries[0].getPoster()}')
-
-//     //console.log(recentSeries{})
-//     document.getElementById("card1").style.backgroundImage = `url('${series[0].getPoster()}'), linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5))`;
-//     // document.getElementById("card1").style.backgroundImage = `url('${recentSeries[0].getPoster()}'), linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5))`;
-//     document.getElementById("card1").style.backgroundSize = "cover"; // Ajustar tamaño
-//     document.getElementById("card1").style.backgroundPosition = "center"; // Centrar imagen
-
-// });
-
 
 const loadAnimes = async () => {
     let series = [];
     try {
-      const res = await fetch("https://api.jikan.moe/v4/anime");
+      const res = await fetch("https://api.jikan.moe/v4/seasons/now");
       const data = await res.json();
       series = data.data;
     } catch (e) {
@@ -42,31 +12,57 @@ const loadAnimes = async () => {
 }; 
 
 let series = loadAnimes().then(result => {
-    series = result
+    //series = result;
+    series = result.filter(anime => anime.rating == "PG-13 - Teens 13 or older");
 
     const cardsMenu = document.getElementById('cardsMenu');
     const cards = cardsMenu.querySelectorAll('.card');
-
+    
     for (let i = 0; i < 20; i++) {
       card = cards[i];
-      card.innerText = series[i].title_english;
-      card.classList.add("bg-custom"); //url('${recentSeries[0].getPoster()}')
-      card.style.backgroundImage = `url('${series[i].images.webp.image_url}'), linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5))`;
-      card.style.backgroundSize = "cover"; // Ajustar tamaño
-      card.style.backgroundPosition = "center"; // Centrar imagen
-    }
 
+      let genres = "", title = "";
+      for(let j = 0; j < series[i].genres.length && j < 5; j++){
+        if(j>0){genres += " / "}
+        genres += series[i].genres[j].name + " ";
+      }
+      if(series[i].title_english == null){
+        title = series[i].title;
+      }else{
+        title = series[i].title_english;
+      }
+
+
+      card.id = `${i}`;
+      card.querySelector(".card-title").innerText = title;
+      card.querySelector(".card-text").innerText = genres;
+      card.classList.add("bg-custom"); //url('${recentSeries[0].getPoster()}')
+      card.style.backgroundImage = `url('${series[i].images.webp.image_url}')`; //, linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5))`;
+    }
 });
 
+function one(num){
+  anim = series[num];
+  const card = document.getElementById("anime-container");
+  
+  const titulo = document.getElementById("anime-title");
+  if(anim.title_english == null){
+    titulo = anim.title;
+  }else{
+    titulo = anim.title_english;
+  }
 
-//Meter los datos cargados de la api en las cards del menu
-
-// series.forEach((ani, index) => {
-// });
-
-
-// document.querySelector("#card2 .card-title").innerText=recentSeries[1].getTitle();
-// document.getElementById("card2").classList.add("bg-custom"); //url('${recentSeries[0].getPoster()}')
-// document.getElementById("card2").style.backgroundImage = `url('${recentSeries[1].getPoster()}'), linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5))`;
-// document.getElementById("card2").style.backgroundSize = "cover"; // Ajustar tamaño
-// document.getElementById("card2").style.backgroundPosition = "center"; // Centrar imagen
+  card.getElementById("anime-score").innerText = anim.score;
+  card.getElementById("anime-type").innerText = anim.type;
+  card.getElementById("anime-episodes").innerText = anim.episodes;
+  card.getElementById("anime-rating").innerText = anim.rating;
+  //const sinopsis = document.getElementById("anime-synopsis");
+  card.getElementById("anime-poster").src = `${anim.images.webp.image_url}`;
+  
+  const estado = card.querySelector("anime-status");
+  if(series[num].airing == false){
+    estado.style.color = "red"; 
+    estado.style.fontWeight = "bold";
+  }
+  
+}

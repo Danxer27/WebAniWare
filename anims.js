@@ -1,3 +1,6 @@
+
+// NO USADO
+
 class Serie {
     id = 0;    
     title = "";

@@ -1,0 +1,75 @@
+#inicio {
+    background-color: #4913a0;
+}
+
+#cardsMenu {
+    margin: 60px;
+}
+
+#mainNav {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 80px;
+    border: 50px;
+}
+
+#pages {
+    align-content: center;
+    margin: 100px;
+}
+
+.anime-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #1f1f1f;
+    color: #ffffff;
+    border-radius: 10px;
+    font-family: 'Segoe UI', sans-serif;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+  }
+  
+  .anime-header {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  
+  .anime-poster {
+    width: 200px;
+    border-radius: 10px;
+  }
+  
+  .anime-info {
+    flex: 1;
+  }
+  
+  .anime-title {
+    font-size: 2em;
+    color: #f9d342;
+    margin-bottom: 10px;
+  }
+  
+  .anime-score,
+  .anime-type,
+  .anime-episodes,
+  .anime-rating,
+  .anime-status {
+    margin: 4px 0;
+    font-size: 1rem;
+  }
+  
+  .anime-synopsis {
+    margin-top: 30px;
+  }
+  
+  .anime-synopsis h2 {
+    color: #f9d342;
+    margin-bottom: 10px;
+  }
+  
+  .anime-synopsis p {
+    line-height: 1.6;
+  }
