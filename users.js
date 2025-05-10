@@ -2,6 +2,8 @@
 class User {
     id = 0;
     name = '';
+    email = '';
+    pw = '';
     favoriteAnimes = [];
     
     constructor(nombre, id, favoritos){
@@ -15,15 +17,14 @@ let isLoged = false;
 
 let users = JSON.parse(localStorage.getItem("users")) || [];
 
-document.getElementById("registerBtn").addEventListener("submit", function(event) {
-    event.preventDefault();
+ async function register() {
   
     const correo = document.getElementById("exampleInputEmail1").value;
     const contrasenia = document.getElementById("exampleInputPassword1").value;
     const nombreUsuario = document.getElementById("exampleUserName").value;
   
     // Obtener la base de datos actual
-    //let users = JSON.parse(localStorage.getItem("users")) || [];
+    let users = JSON.parse(localStorage.getItem("users")) || [];
   
     // Crea nuevo usuario
     const nuevoUsuario = {
@@ -32,6 +33,8 @@ document.getElementById("registerBtn").addEventListener("submit", function(event
       email: correo,
       pw: contrasenia
     };
+
+    //new User(nombreUsuario, users.length + 1, );
   
     users.push(nuevoUsuario);
   
@@ -39,18 +42,17 @@ document.getElementById("registerBtn").addEventListener("submit", function(event
     localStorage.setItem("users", JSON.stringify(users));
   
     alert("Usuario guardado exitosamente.");
-  });
+  };
 
 
   // Tratando de iniciar sesion
-  document.getElementById("loginBtn").addEventListener("submit", function(event) {
-    event.preventDefault();
+  async function loggin() {
   
     //const correo = document.getElementById("exampleInputEmail1").value;
     const contrasenia = document.getElementById("exampleInputPassword1").value;
     const nombreUsuario = document.getElementById("exampleUserName").value;
   
-    //let users = JSON.parse(localStorage.getItem("users")) || [];
+    let users = JSON.parse(localStorage.getItem("users")) || [];
 
     //Buscar usuario
     const usuario = users.find(u => u.name === nombreUsuario);
@@ -67,7 +69,7 @@ document.getElementById("registerBtn").addEventListener("submit", function(event
         mensajeError.textContent = "Correo o contraseña incorrectos.";
         mensajeError.style.display = "block"; // mostrar mensaje
     }
-  });
+  };
 
 
 
@@ -88,4 +90,3 @@ const loadUserName = async () => {
     }
 }; 
 
-window.onload = loadUserName;

@@ -117,3 +117,18 @@
 .d-flex.flex-wrap.gap-2 {
     margin: 50px;
 }
+
+#userButton {
+    display: flex;
+    justify-content: left; 
+}
+
+/* user menu */
+
+#userCard{
+    margin: 3rem;
+}
+
+.list-group-item {
+    background-color: #444;
+}
