@@ -1,11 +1,7 @@
-const setAnim = async (num) => {
-    numAnime = num;
-    return numAnime;
-}; 
+const aseries = JSON.parse(localStorage.getItem("selectAnime"));
 
 window.onload = () => {
-    setAnime
-    anim = series[num];
+  anim = aseries[num];
   const card = document.getElementById("anime-container");
   const titulo = document.getElementById("anime-title");
   

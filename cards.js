@@ -15,6 +15,8 @@ let series = loadAnimes().then(result => {
     //series = result;
     series = result.filter(anime => anime.rating == "PG-13 - Teens 13 or older");
 
+    //localStorage.setItem("selectAnime", JSON.stringify(anims));
+
     const cardsMenu = document.getElementById('cardsMenu');
     const cards = cardsMenu.querySelectorAll('.card');
     
@@ -40,6 +42,85 @@ let series = loadAnimes().then(result => {
       card.style.backgroundImage = `url('${series[i].images.webp.image_url}')`; //, linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5))`;
     }
 });
+
+//const listaRecuperada = JSON.parse(localStorage.getItem("miLista"));
+
+async function filter(filterType, element) {
+ let result = [];
+    try {
+      const res = await fetch(`https://api.jikan.moe/v4/anime?${filterType}=${element}&limit=16&page=1`);
+      const data = await res.json();
+        result = data.data;
+    } catch (e) {
+      console.log("ERROR!!!", e);
+    }
+
+    let seriesFiltered = result.filter(anime => anime.rating == "PG-13 - Teens 13 or older");
+
+  // vaciando todas las cards que hay
+  const contenedor = document.getElementById('sub-container');
+  contenedor.innerHTML = '';
+    	
+  if(seriesFiltered.length < 1){
+        const voidTitle = document.createElement('h1');
+        voidTitle.innerText = "No se encontro ningun anime";
+        voidTitle.classList.add("subtitulo");
+        contenedor.appendChild(voidTitle);
+        return;
+    }
+    
+
+    for (let i = 0; i < seriesFiltered.length; i++) {
+      crearTarjetaVacia(i);
+    }
+
+    const cardsMenu = document.getElementById('cardsMenu');
+    const cards = cardsMenu.querySelectorAll('.card');
+    
+    for (let i = 0; i < seriesFiltered.length; i++) {
+      card = cards[i];
+
+      let genres = "", title = "";
+      for(let j = 0; j < seriesFiltered[i].genres.length && j < 5; j++){
+        if(j>0){genres += " / "}
+        genres += seriesFiltered[i].genres[j].name + " ";
+      }
+      if(seriesFiltered[i].title_english == null){
+        title = seriesFiltered[i].title;
+      }else{
+        title = seriesFiltered[i].title_english;
+      }
+
+      card.id = `${i}`;
+      card.querySelector(".card-title").innerText = title;
+      card.querySelector(".card-text").innerText = genres;
+      card.classList.add("bg-custom"); //url('${recentSeries[0].getPoster()}')
+      card.style.backgroundImage = `url('${seriesFiltered[i].images.webp.image_url}')`;
+  }
+};
+
+function crearTarjetaVacia() {
+  const col = document.createElement('div');
+  col.className = 'col';
+
+  col.innerHTML = `
+      <div class="card" id="">
+      <img src="logo.png" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">Titulo</h5>
+              <p class="card-text">Some quick example text.</p>
+              <a onclick="" href="viewOne/anim.html" class="btn btn-primary">Ver detalles</a>
+              <a href="#" class="btn btn-info">Agregar a Lista</a>
+          </div>
+      </div>
+  `;
+  col.classList.add("bg-custom");
+  const contenedor = document.getElementById('sub-container');
+  contenedor.appendChild(col);
+}
+
+
+
 
 // function one(num){
 //   anim = series[num];

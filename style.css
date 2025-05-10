@@ -108,3 +108,12 @@
     text-align: left;
     overflow: hidden;
 }
+
+#filters-containter {
+    margin: 60px;
+    margin-top: 50px;
+}
+
+.d-flex.flex-wrap.gap-2 {
+    margin: 50px;
+}

@@ -26,20 +26,9 @@
           <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav me-auto mb-2 mb-md-0">
               <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="#">Inicio</a>
+                <a class="nav-link" href="/all/all.html">Ver todos</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/contact/contact.html">Contacto</a>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#producto" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Listas</a>
-                    <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" href="#">Mis favoritos</a></li>
-                      <li><a class="dropdown-item" href="#">Recientes</a></li>
-                      <li><a class="dropdown-item" href="/all/all.html">Todos los disponibles</a></li>
-                    </ul>
-                  </div>
-              </li>
+      
 
               <form class="d-flex">
                 <a class="btn btn-outline-info" id="userButton">Login</a>
@@ -51,34 +40,38 @@
       </nav>
 
 
-      <!-- <div class="carousel slide" data-bs-ride="carousel" id="mainNav" >
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-              <img src="images/im1.jpg" class="d-block w-100" alt="...">
-            </div>
-            <div class="carousel-item">
-              <img src="images/im2.jpg" class="d-block w-100" alt="...">
-            </div>
-            <div class="carousel-item">
-              <img src="images/im3.jpg" class="d-block w-100" alt="...">
-            </div>
-          </div>
-          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-          </button>
-      </div>
- -->
+      <!-- <div id="filters-container" class="container"> -->
+        <div class="d-flex flex-wrap gap-2">
+        <div class="dropdown">
+          <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Genero
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" onclick="filter('genre','Action')">Action</a></li>
+            <li><a class="dropdown-item" onclick="filter('genre','Fantasy')">Fantasia</a></li>
+            <li><a class="dropdown-item" onclick="filter('genre','Romance')">Romance</a></li>
+            <li><a class="dropdown-item" onclick="filter('genre','Sci-Fi')">Sci-Fi</a></li>
+            <li><a class="dropdown-item" onclick="filter('genre','Comedy')">Comedia</a></li>
+            <li><a class="dropdown-item" onclick="filter('genre','Adventure')">Aventura</a></li>
+          </ul>
+        </div>
 
+
+        <div class="dropdown">
+          <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+           Tipo
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" onclick="filter('type','TV')">TV</a></li>
+            <li><a class="dropdown-item" onclick="filter('type','Movie')">Movie</a></li>
+            <li><a class="dropdown-item" onclick="filter('type','OVA')">OVA</a></li>
+          </ul>
+        </div>
 
 
     <div id="cardsMenu" class="container">
         <h2 class="subtitulo">Animes Temporada Primavera 2025</h2>
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3" id="sub-container">
 
           <div class="col">
             <div class="card" id="card1">
@@ -261,10 +254,6 @@
 
       
     </div>
-    
-
-
-
     
 
 </body>
