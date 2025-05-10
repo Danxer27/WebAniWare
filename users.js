@@ -13,57 +13,62 @@ class User {
     }
 }
 
-let isLoged = false;
+//
 
-let users = JSON.parse(localStorage.getItem("users")) || [];
+//let users = JSON.parse(localStorage.getItem("users")) || [];
 
- async function register() {
+
+// REGISTER
+function register() {
   
-    const correo = document.getElementById("exampleInputEmail1").value;
-    const contrasenia = document.getElementById("exampleInputPassword1").value;
-    const nombreUsuario = document.getElementById("exampleUserName").value;
+    const correo = document.getElementById("correo").value;
+    const contrasenia = document.getElementById("contraseña").value;
+    const nombreUsuario = document.getElementById("usuario").value;
   
     // Obtener la base de datos actual
-    let users = JSON.parse(localStorage.getItem("users")) || [];
+    //let users = JSON.parse(localStorage.getItem("users")) || [];
   
     // Crea nuevo usuario
     const nuevoUsuario = {
-      id: users.length + 1,
       name: nombreUsuario,
       email: correo,
-      pw: contrasenia
+      pw: contrasenia,
+      favoritos: []
     };
-
-    //new User(nombreUsuario, users.length + 1, );
   
-    users.push(nuevoUsuario);
+    //users.push(nuevoUsuario);
   
     // Guardar de nuevo en localStorage
-    localStorage.setItem("users", JSON.stringify(users));
+    localStorage.setItem("users", JSON.stringify(nuevoUsuario));
   
     alert("Usuario guardado exitosamente.");
   };
 
 
+
   // Tratando de iniciar sesion
-  async function loggin() {
+  function loggin() {
+    //const correo = document.getElementById("correo").value;
+    const nombreUsuario = document.getElementById("usuario").value;
+    const contrasenia = document.getElementById("contraseña").value;
   
-    //const correo = document.getElementById("exampleInputEmail1").value;
-    const contrasenia = document.getElementById("exampleInputPassword1").value;
-    const nombreUsuario = document.getElementById("exampleUserName").value;
-  
-    let users = JSON.parse(localStorage.getItem("users")) || [];
+    let users = JSON.parse(localStorage.getItem("users"));
+    //let users = localStorage.getItem("users");
 
     //Buscar usuario
-    const usuario = users.find(u => u.name === nombreUsuario);
-  
+    //const usuario = users.find(u => u.name === nombreUsuario);
+
     const mensajeError = document.getElementById("mensajeError");
 
-    if(usuario){
-        if(contrasenia == usuario.pw){
+    if(nombreUsuario == users.name){
+        if(contrasenia == users.pw){
             isLoged = true;
-            document.getElementById("userButton").innerText = usuario.name;
+            localStorage.setItem("loged", JSON.stringify(true));
+            userLoged();
             window.location.href = "/index.html";
+        } else {
+            mensajeError.textContent = "Contraseña incorrecta.";
+            mensajeError.style.display = "block"; // mostrar mensaje
         }
     } else {
         mensajeError.textContent = "Correo o contraseña incorrectos.";
@@ -72,21 +77,14 @@ let users = JSON.parse(localStorage.getItem("users")) || [];
   };
 
 
-
-// Boton de usuario / login
-// document.getElementById("userButton").addEventListener("submit", function(event) {
-//     event.preventDefault();
-  
-//     if(isLoged){
-//         window.location.href = "/userMenu/user.html";
-//     }
-// });
-
-
-const loadUserName = async () => {
-    if(isLoged){
-        document.getElementById("userButton").innerText = usuario.name;
-        document.getElementById("userButton").href = "/userMenu/user.html";
+window.onload = userLoged();
+async function userLoged() {
+    const userButton = document.getElementById("userButton");
+    try {
+        let userName = JSON.parse(localStorage.users).name;
+        userButton.innerText = userName;
+        userButton.href = "/userMenu/user.html";
+    } catch {
+        //console.log("USER BUTTON ERROR!");
     }
-}; 
-
+}

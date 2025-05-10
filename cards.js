@@ -21,7 +21,7 @@ let series = loadAnimes().then(result => {
     const cardsMenu = document.getElementById('cardsMenu');
     const cards = cardsMenu.querySelectorAll('.card');
     
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < series.length; i++) {
       card = cards[i];
 
       let genres = "", title = "";
@@ -36,7 +36,7 @@ let series = loadAnimes().then(result => {
       }
 
 
-      card.id = `${i}`;
+      card.id = `${series[i].mal_id}`;
       card.querySelector(".card-title").innerText = title;
       card.querySelector(".card-text").innerText = genres;
       card.classList.add("bg-custom"); //url('${recentSeries[0].getPoster()}')
@@ -124,54 +124,68 @@ function crearTarjetaVacia(i) {
   contenedor.appendChild(col);
 }
 
+// ID 
+function addFavorite(element) {
+  const cardId = element.closest('.card').id;
+  let favorites = localStorage.getItem("favoritos");
+  favorites.push(cardId);
+  localStorage.setItem("favoritos", favorites);
+  alert("Añadido a favoritos!");
+}
 
-// para mostrar uno solo
-
-document.getElementById("detalles").addEventListener("click", function()  {
-  //let currentId = document.getElementById("detalles").element;
-  
-  const loadOne = async () => {
-    let series = [];
-    try {
-      const res = await fetch(`https://api.jikan.moe/v4/anime/${currentId}`);
-      const data = await res.json();
-      series = data;
-    } catch (e) {
-      console.log("ERROR!!!", e);
-    }
-    return series;
-  }; 
-  
-  
-  let anim = loadOne().then(result => {
-    anim = result;
-    
-    const card = document.getElementById("anime-container")
-    const titulo = document.getElementById("anime-title");
-    
-    if(anim.title_english == null){
-      titulo = anim.title;
-    }else{
-      titulo = anim.title_english;
-    }
-    
-    card.getElementById("anime-score").innerText = anim.score;
-    card.getElementById("anime-type").innerText = anim.type;
-    card.getElementById("anime-episodes").innerText = anim.episodes;
-    card.getElementById("anime-rating").innerText = anim.rating;
-    //const sinopsis = document.getElementById("anime-synopsis");
-    card.getElementById("anime-poster").src = `${anim.images.webp.image_url}`;
-    const estado = card.querySelector("anime-status");
-    
-    if(series[num].airing == false){
-      estado.style.color = "red"; 
-          estado.style.fontWeight = "bold";
-        }
-      });
-})
-
-async function addFavorite(animeId) {
-
+function verDetalles(element) {
+  const cardId = element.closest('.card').id;
+  localStorage.setItem("detail", cardId);
+  window.location.href = "/viewOne/anim.html";
 }
 
 
+//
+async function filterGenre(genre) {
+  let result = series;
+
+
+// vaciando todas las cards que hay
+const contenedor = document.getElementById('sub-container');
+contenedor.innerHTML = '';
+
+let seriesGenred = result.filter(anime => anime.rating == "PG-13 - Teens 13 or older")
+.filter(anime => anime.genre.filter(anim => anim.name == genre));
+
+
+  if(seriesGenred.length == 0){
+      const voidTitle = document.createElement('h1');
+      voidTitle.innerText = "No se encontro ningun anime";
+      contenedor.appendChild(voidTitle);
+      voidTitle.classList.add("subtitulo");
+      return;
+  }
+
+  for (let i = 0; i < seriesGenred.length; i++) {
+    crearTarjetaVacia(i);
+  }
+
+  const cardsMenu = document.getElementById('cardsMenu');
+  const cards = cardsMenu.querySelectorAll('.card');
+  
+  for (let i = 0; i < seriesGenred.length; i++) {
+    card = cards[i];
+
+    let genres = "", title = "";
+    for(let j = 0; j < seriesGenred[i].genres.length && j < 5; j++){
+      if(j>0){genres += " / "}
+      genres += seriesGenred[i].genres[j].name + " ";
+    }
+    if(seriesGenred[i].title_english == null){
+      title = seriesGenred[i].title;
+    }else{
+      title = seriesGenred[i].title_english;
+    }
+
+    card.id = `${i}`;
+    card.querySelector(".card-title").innerText = title;
+    card.querySelector(".card-text").innerText = genres;
+    card.classList.add("bg-custom");
+    card.style.backgroundImage = `url('${seriesGenred[i].images.webp.image_url}')`;
+}
+};
