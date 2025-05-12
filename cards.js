@@ -114,8 +114,8 @@ function crearTarjetaVacia(i) {
             <div class="card-body">
               <h5 class="card-title">Titulo</h5>
               <p class="card-text">Some quick example text.</p>
-              <a onclick="one(${i})" href="viewOne/anim.html" class="btn btn-primary">Ver detalles</a>
-              <a href="#" class="btn btn-info" id="details">Agregar a Lista</a>
+               <a onclick="verDetalles(this)" href="/viewOne/anim.html" class="btn btn-primary" id="details">Ver detalles</a>
+               <a onclick="addFavorite(this)" class="btn btn-info">Agregar a Favoritos</a>
           </div>
       </div>
   `;
@@ -127,9 +127,14 @@ function crearTarjetaVacia(i) {
 // ID 
 function addFavorite(element) {
   const cardId = element.closest('.card').id;
-  let favorites = localStorage.getItem("favoritos");
-  favorites.push(cardId);
-  localStorage.setItem("favoritos", favorites);
+  
+  let favorites = JSON.parse(localStorage.getItem("favoritos")) || [];
+
+  if (!favorites.includes(cardId)) {
+    favorites.push(cardId);
+  }
+
+  localStorage.setItem("favoritos", JSON.stringify(favorites));
   alert("Añadido a favoritos!");
 }
 
