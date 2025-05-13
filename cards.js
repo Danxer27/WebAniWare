@@ -135,8 +135,13 @@ function addFavorite(element) {
   }
 
   localStorage.setItem("favoritos", JSON.stringify(favorites));
-  alert("Añadido a favoritos!");
+  Swal.fire({
+  title: 'Agregado a Favoritos',
+  icon: 'success',
+  confirmButtonText: 'Aceptar'
+});
 }
+
 
 function verDetalles(element) {
   const cardId = element.closest('.card').id;
