@@ -40,9 +40,12 @@ function register() {
   
     // Guardar de nuevo en localStorage
     localStorage.setItem("users", JSON.stringify(nuevoUsuario));
-  
-    alert("Usuario guardado exitosamente.");
-  };
+    Swal.fire({
+    title: 'Usuario registrado correctamente',
+    icon: 'success',
+    confirmButtonText: 'Aceptar'
+});
+};
 
 
 
