@@ -47,62 +47,6 @@ let series = loadAnimes().then(result => {
     }
 });
 
-//const listaRecuperada = JSON.parse(localStorage.getItem("miLista"));
-
-async function filter(filterType, element) {
- let result = [];
-    try {
-      const res = await fetch(`https://api.jikan.moe/v4/anime?${filterType}=${element}&limit=16&page=1`);
-      const data = await res.json();
-        result = data.data;
-    } catch (e) {
-      console.log("ERROR!!!", e);
-    }
-
-    let seriesFiltered = result.filter(anime => anime.rating == "PG-13 - Teens 13 or older");
-
-  // vaciando todas las cards que hay
-  const contenedor = document.getElementById('sub-container');
-  contenedor.innerHTML = '';
-    	
-  if(seriesFiltered.length < 1){
-        const voidTitle = document.createElement('h1');
-        voidTitle.innerText = "No se encontro ningun anime";
-        voidTitle.classList.add("subtitulo");
-        contenedor.appendChild(voidTitle);
-        return;
-    }
-    
-
-    for (let i = 0; i < seriesFiltered.length; i++) {
-      crearTarjetaVacia();
-    }
-
-    const cardsMenu = document.getElementById('cardsMenu');
-    const cards = cardsMenu.querySelectorAll('.card');
-    
-    for (let i = 0; i < seriesFiltered.length; i++) {
-      card = cards[i];
-
-      let genres = "", title = "";
-      for(let j = 0; j < seriesFiltered[i].genres.length && j < 5; j++){
-        if(j>0){genres += " / "}
-        genres += seriesFiltered[i].genres[j].name + " ";
-      }
-      if(seriesFiltered[i].title_english == null){
-        title = seriesFiltered[i].title;
-      }else{
-        title = seriesFiltered[i].title_english;
-      }
-
-      card.id = `${seriesFiltered[i].mal_id}`;
-      card.querySelector(".card-title").innerText = title;
-      card.querySelector(".card-text").innerText = genres;
-      card.classList.add("bg-custom"); //url('${recentSeries[0].getPoster()}')
-      card.style.backgroundImage = `url('${seriesFiltered[i].images.webp.image_url}')`;
-      //card.getElementById("details").element = `${seriesFiltered[i].mal_id}`;
-  }
-};
 
 function crearTarjetaVacia(i) {
   const col = document.createElement('div');
@@ -150,18 +94,17 @@ function verDetalles(element) {
 }
 
 
-//
-async function filterGenre(genre) {
-  let result = series;
 
+// FILTRADO POR GENERO
+async function filterGenre(genre) {
 
 // vaciando todas las cards que hay
 const contenedor = document.getElementById('sub-container');
 contenedor.innerHTML = '';
 
-let seriesGenred = result.filter(anime => anime.rating == "PG-13 - Teens 13 or older")
-.filter(anime => anime.genre.filter(anim => anim.name == genre));
-
+ const seriesGenred = series
+    .filter(anime => anime.rating === "PG-13 - Teens 13 or older")
+    .filter(anime => Array.isArray(anime.genres) && anime.genres.some(g => g.name === genre));
 
   if(seriesGenred.length == 0){
       const voidTitle = document.createElement('h1');
@@ -172,7 +115,55 @@ let seriesGenred = result.filter(anime => anime.rating == "PG-13 - Teens 13 or o
   }
 
   for (let i = 0; i < seriesGenred.length; i++) {
-    crearTarjetaVacia(i);
+    crearTarjetaVacia();
+  }
+
+  const cardsMenu = document.getElementById('cardsMenu');
+  const cards = cardsMenu.querySelectorAll('.card');
+  
+  for (let i = 0; i < seriesGenred.length; i++) {
+    card = cards[i];
+
+    let genres = "", title = "";
+    for(let j = 0; j < seriesGenred[i].genres.length && j < 5; j++){
+      if(j>0){genres += " / "}
+      genres += seriesGenred[i].genres[j].name + " ";
+    }
+    if(seriesGenred[i].title_english == null){
+      title = seriesGenred[i].title;
+    }else{
+      title = seriesGenred[i].title_english;
+    }
+
+    card.id = `${i}`;
+    card.querySelector(".card-title").innerText = title;
+    card.querySelector(".card-text").innerText = genres;
+    card.classList.add("bg-custom");
+    card.style.backgroundImage = `url('${seriesGenred[i].images.webp.image_url}')`;
+}
+};
+
+// FILTRADO POR TIPO
+async function filterType(type) {
+
+// vaciando todas las cards que hay
+const contenedor = document.getElementById('sub-container');
+contenedor.innerHTML = '';
+
+ const seriesGenred = series
+    .filter(anime => anime.rating === "PG-13 - Teens 13 or older")
+    .filter(anime => anime.type === type);
+
+  if(seriesGenred.length == 0){
+      const voidTitle = document.createElement('h1');
+      voidTitle.innerText = "No se encontro ningun anime";
+      contenedor.appendChild(voidTitle);
+      voidTitle.classList.add("subtitulo");
+      return;
+  }
+
+  for (let i = 0; i < seriesGenred.length; i++) {
+    crearTarjetaVacia();
   }
 
   const cardsMenu = document.getElementById('cardsMenu');
