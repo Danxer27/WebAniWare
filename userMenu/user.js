@@ -88,6 +88,12 @@ loadUser().then(favoritos => {
   }
 });
 
+function verDetalless(element) {
+  const cardId = element.closest('.card').id;
+  localStorage.setItem("detail", cardId);
+  window.location.href = "/viewOne/anim.html";
+}
+
 function verDetalle(cardId) {
   localStorage.setItem("detail", cardId);
   window.location.href = "/viewOne/anim.html";
@@ -121,7 +127,7 @@ function crearTarjetaVacia(i) {
             <div class="card-body">
               <h5 class="card-title">Titulo</h5>
               <p class="card-text">Some quick example text.</p>
-               <a onclick="verDetalles(this)" href="/viewOne/anim.html" class="btn btn-primary" id="details">Ver detalles</a>
+               <a onclick="verDetalless(this)" href="/viewOne/anim.html" class="btn btn-primary" id="details">Ver detalles</a>
                <a onclick="deleteFav(this)" class="btn btn-danger">Eliminar de Favoritos</a>
           </div>
       </div>
