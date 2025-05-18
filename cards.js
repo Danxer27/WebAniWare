@@ -18,7 +18,7 @@ let series = loadAnimes().then(result => {
 
     //localStorage.setItem("selectAnime", JSON.stringify(anims));
 
-    const cardsMenu = document.getElementById('cardsMenu');
+    const cardsMenu = document.querySelector('#cardsMenu');
     const cards = cardsMenu.querySelectorAll('.card');
     
     for (let i = 0; i < series.length; i++) {

@@ -35,7 +35,7 @@ let series = loadAnimes().then(result => {
       }
 
 
-      card.id = `${i}`;
+      card.id = `${series[i].mal_id}`;
       card.querySelector(".card-title").innerText = title;
       card.querySelector(".card-text").innerText = genres;
       card.classList.add("bg-custom"); //url('${recentSeries[0].getPoster()}')
@@ -91,7 +91,7 @@ async function filter(filterType, element) {
         title = seriesFiltered[i].title_english;
       }
 
-      card.id = `${i}`;
+      card.id = `${seriesFiltered[i].mal_id}`;
       card.querySelector(".card-title").innerText = title;
       card.querySelector(".card-text").innerText = genres;
       card.classList.add("bg-custom"); //url('${recentSeries[0].getPoster()}')
@@ -110,8 +110,8 @@ function crearTarjetaVacia(id) {
             <div class="card-body">
               <h5 class="card-title">Titulo</h5>
               <p class="card-text">Some quick example text.</p>
-              <a onclick="" href="viewOne/anim.html" class="btn btn-primary">Ver detalles</a>
-              <a href="#" class="btn btn-info">Agregar a Lista</a>
+              <a onclick="verDetalles(this)" href="/viewOne/anim.html" class="btn btn-primary" id="details">Ver detalles</a>
+              <a onclick="addFavorite(this)" class="btn btn-info">Agregar a Favoritos</a>
           </div>
       </div>
   `;
@@ -120,78 +120,39 @@ function crearTarjetaVacia(id) {
   contenedor.appendChild(col);
 }
 
-
-
-// DE AQUI PARA ABAJO YA NO SE USA
-
-
-
-//const listaRecuperada = JSON.parse(localStorage.getItem("miLista"));
-
-async function filterGenre(genre) {
-    let result = [];
-    try {
-      const res = await fetch(`https://api.jikan.moe/v4/anime?genres=${genre}&limit=16&page=1`);
-      const data = await res.json();
-        result = data.data;
-    } catch (e) {
-      console.log("ERROR!!!", e);
-    }
-
-  // vaciando todas las cards que hay
-  const contenedor = document.getElementById('sub-container');
-  contenedor.innerHTML = '';
-
-  // añadiendo el elemento para que todo este acomodado
-  // const header = document.createElement('div');
-  // header.classList.add("row", "row-cols-1", "row-cols-sm-2", "row-cols-md-3", "row-cols-lg-4", "g-3");
-  // contenedor.appendChild(header);
+function addFavorite(element) {
+  const cardId = element.closest('.card').id;
   
-  // filtrando las series:
-  let seriesGenred = result.filter(anime => anime.rating == "PG-13 - Teens 13 or older");
+  let favorites = JSON.parse(localStorage.getItem("favoritos")) || [];
 
-
-    if(seriesGenred.length == 0){
-        const voidTitle = document.createElement('h1');
-        voidTitle.innerText = "No se encontro ningun anime";
-        contenedor.appendChild(voidTitle);
-        voidTitle.classList.add("subtitulo");
-        return;
-    }
-
-    // const headertitle = document.createElement('h1');
-    // headertitle.classList.add("subtitulo");
-    // headertitle.innerText = `Animes Generos`;
-    // contenedor.appendChild(headertitle);
-
-
-    for (let i = 0; i < seriesGenred.length; i++) {
-      crearTarjetaVacia(i);
-    }
-
-    const cardsMenu = document.getElementById('cardsMenu');
-    const cards = cardsMenu.querySelectorAll('.card');
-    
-    for (let i = 0; i < seriesGenred.length; i++) {
-      card = cards[i];
-
-      let genres = "", title = "";
-      for(let j = 0; j < seriesGenred[i].genres.length && j < 5; j++){
-        if(j>0){genres += " / "}
-        genres += seriesGenred[i].genres[j].name + " ";
-      }
-      if(seriesGenred[i].title_english == null){
-        title = seriesGenred[i].title;
-      }else{
-        title = seriesGenred[i].title_english;
-      }
-
-      card.id = `${i}`;
-      card.querySelector(".card-title").innerText = title;
-      card.querySelector(".card-text").innerText = genres;
-      card.classList.add("bg-custom"); //url('${recentSeries[0].getPoster()}')
-      card.style.backgroundImage = `url('${seriesGenred[i].images.webp.image_url}')`;
+  if (!favorites.includes(cardId)) {
+    favorites.push(cardId);
   }
-};
+
+  localStorage.setItem("favoritos", JSON.stringify(favorites));
+  Swal.fire({
+  title: 'Agregado a Favoritos',
+  icon: 'success',
+  confirmButtonText: 'Aceptar'
+});
+}
 
 
+function verDetalles(element) {
+  const cardId = element.closest('.card').id;
+  localStorage.setItem("detail", cardId);
+  window.location.href = "/viewOne/anim.html";
+}
+
+
+window.onload = userLoged();
+async function userLoged() {
+    const userButton = document.getElementById("userButton");
+    try {
+        let userName = JSON.parse(localStorage.users).name;
+        userButton.innerText = userName;
+        userButton.href = "/userMenu/user.html";
+    } catch {
+        //console.log("USER BUTTON ERROR!");
+    }
+}
