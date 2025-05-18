@@ -43,21 +43,23 @@
 
 
       <!-- <div id="filters-container" class="container"> -->
-        <div class="d-flex flex-wrap gap-2">
+         <div class="d-flex flex-wrap gap-2">
         <div class="dropdown">
           <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Genero
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" onclick="filterGenre('Action')">Action</a></li>
-            <li><a class="dropdown-item" onclick="filterGenre('Fantasy')">Fantasia</a></li>
-            <li><a class="dropdown-item" onclick="filterGenre('Romance')">Romance</a></li>
-            <li><a class="dropdown-item" onclick="filterGenre('Sci-Fi')">Sci-Fi</a></li>
-            <li><a class="dropdown-item" onclick="filterGenre('Comedy')">Comedia</a></li>
-            <li><a class="dropdown-item" onclick="filterGenre('Adventure')">Aventura</a></li>
+            <li><a class="dropdown-item" onclick="filter('genres','1')">Action</a></li>
+            <li><a class="dropdown-item" onclick="filter('genres','10')">Fantasia</a></li>
+            <li><a class="dropdown-item" onclick="filter('genres','22')">Romance</a></li>
+            <li><a class="dropdown-item" onclick="filter('genres','8')">Drama</a></li>
+            <li><a class="dropdown-item" onclick="filter('genres','41')">Suspenso</a></li>
+            <li><a class="dropdown-item" onclick="filter('genres','24')">Sci-Fi</a></li>
+            <li><a class="dropdown-item" onclick="filter('genres','4')">Comedia</a></li>
+            <li><a class="dropdown-item" onclick="filter('genres','2')">Aventura</a></li>
+            <li><a class="dropdown-item" onclick="filter('genres','37')">Supernatural</a></li>
           </ul>
         </div>
-
 
         <div class="dropdown">
           <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
